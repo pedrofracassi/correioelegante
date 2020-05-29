@@ -1,0 +1,32 @@
+{
+  "name": "correioelegante",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon --exec node -r dotenv/config src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrofracassi/correioelegante.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedrofracassi/correioelegante/issues"
+  },
+  "homepage": "https://github.com/pedrofracassi/correioelegante#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@svgdotjs/svg.js": "^3.0.16",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.8",
+    "svgdom": "^0.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "content": "Oi vose é bonita",
+    "delivery": {
+        "status": "waiting_for_approval",
+        "method": "feed"
+    },
+    "recipient": {
+        "name": "Fulaninha",
+        "instagram": "fulaninho1332",
+        "year": 9,
+        "classroom": "D"
+    },
+    "sender": {
+        "name": "Fulano",
+        "instagram": "fulaninho1337",
+        "year": 7,
+        "classroom": "A"
+    }
+}
