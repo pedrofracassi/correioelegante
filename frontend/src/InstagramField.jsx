@@ -19,15 +19,18 @@ const searchResults = [
   }
 ]
 
-export default function InstagramField ({ label }) {
+export default function InstagramField ({ ...props }) {
   return (
     <AutoComplete
       freeSolo
+      value={props.value}
+      onChange={props.onChange}
+      name={props.name}
       includeInputInList
       options={searchResults.map(r => r.user)}
       getOptionLabel={option => option.username}
       renderInput={(params) => 
-        <TextField {...params} fullWidth label="Instagram (opcional)" variant="outlined" />    
+        <TextField {...params} { ...props } />    
       }
       renderOption={option => {
         return (

@@ -1,9 +1,4 @@
 {
-    "content": "Oi vose é bonita",
-    "delivery": {
-        "status": "waiting_for_approval",
-        "method": "feed"
-    },
     "sender": {
         "name": "Fulano",
         "classroom": "7D",
@@ -11,6 +6,11 @@
     },
     "recipient": {
         "name": "Fulaninha",
+        "classroom": "7D",
         "instagram": "fulaninho1332"
-    }
+    },
+    "content": "Oi vose é bonita",
+    "deliveryMethod": "feed",
+    "status": "delivered",
+    "instagramUrl": "https://www.instagram.com/p/CA2tXPhHtEk/"
 }

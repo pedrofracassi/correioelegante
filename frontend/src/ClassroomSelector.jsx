@@ -8,11 +8,11 @@ import {
     InputLabel
 } from '@material-ui/core'
 
-export default function ClassroomSelector ({ label, disabled }) {
+export default function ClassroomSelector ({ ...props }) {
   return (
-    <FormControl variant="outlined" disabled={disabled} fullWidth>
-      <InputLabel id="label">{label}</InputLabel>
-      <Select labelId="label" id="grouped-select" label={label}>
+    <FormControl variant="outlined" disabled={props.disabled} fullWidth>
+      <InputLabel id="label">{props.label}</InputLabel>
+      <Select labelId="label" id="grouped-select" {...props}>
         <MenuItem value="EX">Ex-aluno(a)</MenuItem>
         <ListSubheader>Fundamental</ListSubheader>
         <MenuItem value="6A">6º ano A</MenuItem>

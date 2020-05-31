@@ -1,6 +1,8 @@
 const express = require('express')
 const { MongoClient, ObjectId } = require('mongodb')
 const bodyParser = require('body-parser')
+const LetterRenderer = require('./LetterRenderer')
+const cors = require('cors')
 
 const PORT = process.env.PORT || 80
 
@@ -22,6 +24,7 @@ function initializeExpress (database) {
 
   const app = express()
 
+  app.use(cors())
   app.use(express.static('src/public'))
   app.use(bodyParser.json())
 
@@ -46,6 +49,12 @@ function initializeExpress (database) {
       ...req.body
     })
     res.sendStatus(200)
+  })
+
+  app.get('/svg/', async (req, res) => {
+    const svg = await LetterRenderer.render()
+    res.setHeader('Content-Type', 'image/svg+xml')
+    res.send(svg)
   })
 
   app.listen(PORT, () => {
