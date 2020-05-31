@@ -25,13 +25,13 @@ function initializeExpress (database) {
   app.use(express.static('src/public'))
   app.use(bodyParser.json())
 
-  app.get('/api/letters', (req, res) => {
+  app.get('/letters', (req, res) => {
     letterCollection.find().toArray(((err, docs) => {
       res.json(docs)
     }))
   })
 
-  app.get('/api/letters/:letterId', (req, res) => {
+  app.get('/letters/:letterId', (req, res) => {
     letterCollection.findOne({ _id: new ObjectId(req.params.letterId) }).then(doc => {
       if (doc) return res.json(doc)
       res.sendStatus(404)
@@ -40,7 +40,7 @@ function initializeExpress (database) {
     })
   })
 
-  app.post('/api/letters', (req, res) => {
+  app.post('/letters', (req, res) => {
     letterCollection.insertOne({
       timestamp: Date.now(),
       ...req.body
