@@ -1,7 +1,10 @@
 import React from 'react'
 
 import {
-    TextField
+    TextField,
+    Avatar,
+    Grid,
+    Typography
 } from '@material-ui/core'
 
 import AutoComplete from '@material-ui/lab/Autocomplete'
@@ -20,10 +23,27 @@ export default function InstagramField ({ label }) {
   return (
     <AutoComplete
       freeSolo
-      options={searchResults.map(r => r.user.username)}
+      includeInputInList
+      options={searchResults.map(r => r.user)}
+      getOptionLabel={option => option.username}
       renderInput={(params) => 
         <TextField {...params} fullWidth label="Instagram (opcional)" variant="outlined" />    
       }
+      renderOption={option => {
+        return (
+          <Grid container alignItems="center" spacing={1}>
+            <Grid item>
+              <Avatar src={option.profile_pic_url} alt={option.full_name}></Avatar>
+            </Grid>
+            <Grid item xs>
+              {option.full_name}
+              <Typography variant="body2" color="textSecondary">
+                @{option.username}
+              </Typography>
+            </Grid>
+          </Grid>
+        )
+      }}
     />
   )
 }
