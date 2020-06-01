@@ -53,7 +53,7 @@ function initializeExpress (database) {
 
   app.get('/jpeg/', (req, res) => {
     letterCollection.find().toArray(async (err, docs) => {
-      const jpeg = await LetterRenderer.render(docs[0])
+      const jpeg = await LetterRenderer.render(docs[Math.floor(Math.random() * docs.length)])
       res.setHeader('Content-Type', 'image/jpeg')
       res.send(jpeg)
     })

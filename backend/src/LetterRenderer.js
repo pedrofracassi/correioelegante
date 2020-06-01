@@ -2,7 +2,7 @@ const svgdom = require('svgdom')
 const SVG = require('@svgdotjs/svg.js')
 const sharp = require('sharp')
 
-const ICON_SPECULUM = '<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.74" y="27.6652" width="48.5948" height="48.5948" stroke="white" stroke-width="7.48"/><rect x="27.6652" y="3.74" width="48.5948" height="48.5948" stroke="white" stroke-width="7.48"/></svg>'
+const Assets = require('./Assets.js')
 
 SVG.extend([SVG.Path, SVG.Circle], {
   rightmost: function () {
@@ -48,11 +48,26 @@ module.exports = class LetterRenderer {
       .height(HEADER_HEIGHT)
       .move(PADDING, TOP_PADDING)
 
-    const recipientTagText = headerContainer.path(TextUtils.getTextPath('PARA', 'medium', 26))
+    headerContainer.path(TextUtils.getTextPath('PARA', 'medium', 26))
       .fill(CONTENT_FONT_COLOR)
     const recipientNameText = headerContainer.path(TextUtils.getTextPath(letter.recipient.name, 'black', 60))
       .fill(CONTENT_FONT_COLOR)
       recipientNameText.y(headerContainer.height() - recipientNameText.height())
+
+    // Logo
+    const logoIconContainer = canvas.nested()
+    logoIconContainer.svg(Assets.ICON_CORREIO_ELEGANTE)
+    logoIconContainer
+      .size(121, 116)
+      .x(WIDTH - logoIconContainer.width() - PADDING)
+      .y(TOP_PADDING - 24)
+
+    const logoTextContainer = canvas.nested()
+    logoTextContainer.svg(Assets.TEXT_CORREIO_ELEGANTE)
+    logoTextContainer
+      .size(269, 106)
+      .x(WIDTH - logoTextContainer.width() - PADDING - 44)
+      .y(TOP_PADDING - 24 + 16)
 
     // Content
     const contentContainer = canvas.nested()
@@ -85,7 +100,7 @@ module.exports = class LetterRenderer {
       .height(HEADER_HEIGHT)
       .move(PADDING, TOP_PADDING + headerContainer.height() +TOP_PADDING + PADDING + contentContainer.height())
 
-    footerContainer.svg(ICON_SPECULUM)
+    footerContainer.svg(Assets.ICON_SPECULUM)
       .height(footerContainer.height())
       .width(footerContainer.width())
 
