@@ -92,7 +92,8 @@ export default function SubmissionForm({openSimpleSnackBar, onComplete}) {
       content: state.messageContent
     }
     try {
-      const response = await fetch('http://localhost:80/letters', {
+      console.log(process.env.API_PATH)
+      const response = await fetch(`${process.env.REACT_APP_API_PATH}/letters`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
