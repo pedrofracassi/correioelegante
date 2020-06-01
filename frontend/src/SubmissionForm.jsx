@@ -64,7 +64,7 @@ export default function SubmissionForm({openSimpleSnackBar, onComplete}) {
     if (!state.toName) doHelpMessage('toName', 'Insira um nome')
     if (!state.toClassroom) doHelpMessage('toClassroom', 'Insira uma turma')
 
-    if (direct && !state.toInstagram) doHelpMessage('toInstagram', 'Insira uma usuário caso for enviar via direct')
+    if (direct && !state.toInstagram) doHelpMessage('toInstagram', 'Insira um usuário para receber a cartinha via direct')
 
     setHelpMessages({
       ...initialHelpMessages,
@@ -92,7 +92,6 @@ export default function SubmissionForm({openSimpleSnackBar, onComplete}) {
       content: state.messageContent
     }
     try {
-      console.log(process.env.API_PATH)
       const response = await fetch(`${process.env.REACT_APP_API_PATH}/letters`, {
         method: 'POST',
         headers: {
@@ -107,7 +106,8 @@ export default function SubmissionForm({openSimpleSnackBar, onComplete}) {
         onComplete()
       } else throw new Error('ue moises, seila qq deu')
     } catch (e) {
-      openSimpleSnackBar('PI PI PI PI PI: Maquina de cartinhas quebrou :( Chama o pedrinho ai pra ajudar ')
+      openSimpleSnackBar('Um erro ocorreu, por favor tente novamente mais tarde.')
+      setLoading('')
       console.error(e)
     }
   }
