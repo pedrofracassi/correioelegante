@@ -136,6 +136,7 @@ export default function SubmissionForm({openSimpleSnackBar, onComplete}) {
               <Grid item xs={12} md={4}>
                 <ClassroomSelector
                   label="Turma"
+                  outsider
                   value={state.fromClassroom}
                   onChange={handleChange}
                   name="fromClassroom"

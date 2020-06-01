@@ -13,6 +13,9 @@ export default function ClassroomSelector ({ ...props }) {
     <FormControl variant="outlined" {...props} fullWidth>
       <InputLabel id="label">{props.label}</InputLabel>
       <Select labelId="label" id="grouped-select" {...props}>
+        {
+          props.outsider ? <MenuItem value="VS">Visitante</MenuItem> : <></>
+        }
         <MenuItem value="EX">Ex-aluno(a)</MenuItem>
         <ListSubheader>Fundamental</ListSubheader>
         <MenuItem value="6A">6º ano A</MenuItem>
