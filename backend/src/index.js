@@ -51,10 +51,12 @@ function initializeExpress (database) {
     res.sendStatus(200)
   })
 
-  app.get('/svg/', async (req, res) => {
-    const svg = await LetterRenderer.render()
-    res.setHeader('Content-Type', 'image/svg+xml')
-    res.send(svg)
+  app.get('/jpeg/', (req, res) => {
+    letterCollection.find().toArray(async (err, docs) => {
+      const jpeg = await LetterRenderer.render(docs[0])
+      res.setHeader('Content-Type', 'image/jpeg')
+      res.send(jpeg)
+    })
   })
 
   app.listen(PORT, () => {

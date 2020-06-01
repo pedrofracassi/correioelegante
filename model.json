@@ -1,15 +1,15 @@
 {
     "sender": {
-        "name": "Fulano",
+        "name": "Fulana",
         "classroom": "7D",
         "anonymous": true
     },
     "recipient": {
-        "name": "Fulaninha",
+        "name": "Fulana",
         "classroom": "7D",
         "instagram": "fulaninho1332"
     },
-    "content": "Oi vose é bonita",
+    "content": "Oi tudo bom?",
     "deliveryMethod": "feed",
     "status": "delivered",
     "instagramUrl": "https://www.instagram.com/p/CA2tXPhHtEk/"
