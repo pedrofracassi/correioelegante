@@ -102,15 +102,17 @@ module.exports = class LetterRenderer {
       .height(footerContainer.height())
       .width(footerContainer.width())
 
-    const senderTagText = footerContainer.path(TextUtils.getTextPath('DE', 'medium', 26))
+    if (!letter.sender.anonymous) {
+      const senderTagText = footerContainer.path(TextUtils.getTextPath('DE', 'medium', 26))
       .fill(CONTENT_FONT_COLOR)
-    const senderNameText = footerContainer.path(TextUtils.getTextPath(letter.sender.name, 'black', 60))
-      .fill(CONTENT_FONT_COLOR)
-    senderNameText
-      .x(footerContainer.width() - senderNameText.width())
-      .y(headerContainer.height() - senderNameText.height())
-    senderTagText
-      .x(footerContainer.width() - senderNameText.width())
+      const senderNameText = footerContainer.path(TextUtils.getTextPath(letter.sender.name, 'black', 60))
+        .fill(CONTENT_FONT_COLOR)
+      senderNameText
+        .x(footerContainer.width() - senderNameText.width())
+        .y(headerContainer.height() - senderNameText.height())
+      senderTagText
+        .x(footerContainer.width() - senderNameText.width())
+    }
 
     return sharp(Buffer.from(canvas.svg())).jpeg({ quality: 100 }).toBuffer()
   }
