@@ -44,11 +44,13 @@ function initializeExpress (database) {
   })
 
   app.post('/letters', (req, res) => {
-    letterCollection.insertOne({
+    const newDocument = {
       timestamp: Date.now(),
+      status: 'waiting_for_approval',
       ...req.body
-    })
-    res.sendStatus(200)
+    }
+    letterCollection.insertOne(newDocument)
+    res.json(newDocument)
   })
 
   app.get('/jpeg/', (req, res) => {
