@@ -34,8 +34,8 @@ export default function ClassroomSelector ({ ...props }) {
         <MenuItem value="2A">2º ano A</MenuItem>
         <MenuItem value="2B">2º ano B</MenuItem>
         <MenuItem value="2C">2º ano C</MenuItem>
-        <MenuItem value="1A">3º ano A</MenuItem>
-        <MenuItem value="1B">3º ano B</MenuItem>
+        <MenuItem value="3A">3º ano A</MenuItem>
+        <MenuItem value="3B">3º ano B</MenuItem>
       </Select>
     </FormControl>
   )

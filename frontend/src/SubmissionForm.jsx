@@ -89,6 +89,7 @@ export default function SubmissionForm({openSimpleSnackBar, onComplete}) {
         classroom: state.toClassroom,
         instagram: state.toInstagram
       },
+      deliveryMethod: direct ? 'direct' : 'feed',
       content: state.messageContent
     }
     try {
