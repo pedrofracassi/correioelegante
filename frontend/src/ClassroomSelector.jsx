@@ -10,7 +10,7 @@ import {
 
 export default function ClassroomSelector ({ ...props }) {
   return (
-    <FormControl variant="outlined" disabled={props.disabled} fullWidth>
+    <FormControl variant="outlined" {...props} fullWidth>
       <InputLabel id="label">{props.label}</InputLabel>
       <Select labelId="label" id="grouped-select" {...props}>
         <MenuItem value="EX">Ex-aluno(a)</MenuItem>
