@@ -28,10 +28,8 @@ const CONTENT_FONT_COLOR = '#ffffff'
 const PADDING = 45
 const TOP_PADDING = 80
 
-const dummyLetter = require('../../model.json')
-
 module.exports = class LetterRenderer {
-  static render (letter = dummyLetter) {
+  static render (letter) {
     const window = svgdom.createSVGWindow()
     const document = window.document
     SVG.registerWindow(window, document)
