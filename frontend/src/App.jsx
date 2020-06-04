@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom'
 
 import Home from './Home.jsx'
-import { ThemeProvider, Container } from '@material-ui/core'
+import Admin from './Admin.jsx'
+import { ThemeProvider } from '@material-ui/core'
 import Snackbar from "@material-ui/core/Snackbar"
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
@@ -21,11 +22,10 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Container maxWidth="md">
         <Router>
           <Switch>
             <Route path="/admin">
-              <h1>Painel Administrativo</h1>
+              <Admin />
             </Route>
             <Route path="/">
               <Home openSimpleSnackBar={openSimpleSnackBar} />
@@ -52,7 +52,6 @@ function App() {
             </React.Fragment>
           }
         />
-      </Container>
     </ThemeProvider>
   )
 }

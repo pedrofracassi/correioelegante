@@ -7,6 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Collapse from "@material-ui/core/Collapse";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { Container } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -29,36 +30,38 @@ export default function Home({openSimpleSnackBar}) {
   const classes = useStyles()
   return (
     <div>
-      <Collapse in={complete}>
-        <Alert
-          icon={<CheckIcon fontSize="inherit"/>}
-          severity="success"
-          className={classes.alert}
-          classes={{
-            message: classes.fullWidth
-          }}
-        >
-          <div className={classes.fullWidth}>
-            <AlertTitle>Cartinha enviada com sucesso!</AlertTitle>
-            Entregaremos ela assim que possível! 🙂
-            <Grid container className={classes.sendAnother} justify="flex-end">
-              <Grid item xs={12} sm={4}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  disableElevation
-                  onClick={() => setComplete(false)}
-                >
-                  Enviar outra
-                </Button>
+      <Container maxWidth="md">
+        <Collapse in={complete}>
+          <Alert
+            icon={<CheckIcon fontSize="inherit"/>}
+            severity="success"
+            className={classes.alert}
+            classes={{
+              message: classes.fullWidth
+            }}
+          >
+            <div className={classes.fullWidth}>
+              <AlertTitle>Cartinha enviada com sucesso!</AlertTitle>
+              Entregaremos ela assim que possível! 🙂
+              <Grid container className={classes.sendAnother} justify="flex-end">
+                <Grid item xs={12} sm={4}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    disableElevation
+                    onClick={() => setComplete(false)}
+                  >
+                    Enviar outra
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-        </Alert>
-      </Collapse>
-      <Collapse in={!complete}>
-        <SubmissionForm onComplete={() => setComplete(true)} openSimpleSnackBar={openSimpleSnackBar}/>
-      </Collapse>
+            </div>
+          </Alert>
+        </Collapse>
+        <Collapse in={!complete}>
+          <SubmissionForm onComplete={() => setComplete(true)} openSimpleSnackBar={openSimpleSnackBar}/>
+        </Collapse>
+      </Container>
     </div>
   )
 }
