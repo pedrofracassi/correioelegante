@@ -29,7 +29,7 @@ function initializeExpress (database) {
   app.use(bodyParser.json())
 
   app.get('/letters', (req, res) => {
-    letterCollection.find().toArray(((err, docs) => {
+    letterCollection.find(req.query.status ? { status: req.query.status } : {}).toArray(((err, docs) => {
       res.json(docs)
     }))
   })
