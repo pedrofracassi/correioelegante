@@ -21,7 +21,7 @@ const HEIGHT = 1080
 
 const FOOTER_HEIGHT = HEADER_HEIGHT = 80
 
-const CONTENT_FONT_SIZE = 48
+const CONTENT_FONT_SIZE = 36
 const CONTENT_FONT_LINE_HEIGHT = CONTENT_FONT_SIZE + CONTENT_FONT_SIZE/3
 const CONTENT_FONT_COLOR = '#ffffff'
 
@@ -46,11 +46,17 @@ module.exports = class LetterRenderer {
       .height(HEADER_HEIGHT)
       .move(PADDING, TOP_PADDING)
 
-    headerContainer.path(TextUtils.getTextPath('PARA', 'medium', 26))
+    const headerTagText = headerContainer.path(TextUtils.getTextPath(`PARA`, 'medium', 26))
       .fill(CONTENT_FONT_COLOR)
     const recipientNameText = headerContainer.path(TextUtils.getTextPath(letter.recipient.name, 'black', 60))
       .fill(CONTENT_FONT_COLOR)
-      recipientNameText.y(headerContainer.height() - recipientNameText.height())
+    recipientNameText.y(headerTagText.height() + 10)
+    const recipientClassroomText = headerContainer.path(TextUtils.getTextPath(TextUtils.getClassroomDisplayName(letter.recipient.classroom), 'medium', 26))
+      .fill(CONTENT_FONT_COLOR)
+    recipientClassroomText
+      .x(recipientNameText.width() + 10)
+      .y(headerContainer.height() - recipientClassroomText.height())
+    
 
     // Logo
     const logoIconContainer = canvas.nested()
@@ -79,7 +85,7 @@ module.exports = class LetterRenderer {
     const letterTextContainer = contentContainer.nested()
       .width(contentContainer.width())
 
-    const contentLines = TextUtils.getParagraphLines(letter.content, 'medium', CONTENT_FONT_SIZE, CONTENT_FONT_LINE_HEIGHT, contentContainer.width())
+    const contentLines = TextUtils.getParagraphLines(letter.content, 'medium', CONTENT_FONT_SIZE, CONTENT_FONT_LINE_HEIGHT, contentContainer.width(), contentContainer.height(), 15)
     
     contentLines.forEach((line, index) => {
       const linePath = letterTextContainer.path(TextUtils.getTextPath(line, 'medium', CONTENT_FONT_SIZE))
@@ -98,20 +104,27 @@ module.exports = class LetterRenderer {
       .height(HEADER_HEIGHT)
       .move(PADDING, TOP_PADDING + headerContainer.height() +TOP_PADDING + PADDING + contentContainer.height())
 
-    footerContainer.svg(Assets.ICON_SPECULUM)
-      .height(footerContainer.height())
-      .width(footerContainer.width())
+    const footerIconContainer = footerContainer.nested()
+      .size(80, 80)
+      .svg(Assets.ICON_SPECULUM)
 
-    if (!letter.sender.anonymous) {
+    if (letter.sender.anonymous) {
+      footerIconContainer.x((footerContainer.width() - footerIconContainer.width())/2)
+    } else {
+      const senderClassroomText = footerContainer.path(TextUtils.getTextPath(TextUtils.getClassroomDisplayName(letter.sender.classroom), 'medium', 26))
+        .fill(CONTENT_FONT_COLOR)
+      senderClassroomText
+        .x(footerContainer.width() - senderClassroomText.width())
+        .y(footerContainer.height() - senderClassroomText.height())
       const senderTagText = footerContainer.path(TextUtils.getTextPath('DE', 'medium', 26))
-      .fill(CONTENT_FONT_COLOR)
+        .fill(CONTENT_FONT_COLOR)
       const senderNameText = footerContainer.path(TextUtils.getTextPath(letter.sender.name, 'black', 60))
         .fill(CONTENT_FONT_COLOR)
       senderNameText
-        .x(footerContainer.width() - senderNameText.width())
+        .x(footerContainer.width() - senderNameText.width() - senderClassroomText.width() - 10)
         .y(headerContainer.height() - senderNameText.height())
       senderTagText
-        .x(footerContainer.width() - senderNameText.width())
+        .x(footerContainer.width() - senderNameText.width() - senderClassroomText.width() - 10)
     }
 
     return sharp(Buffer.from(canvas.svg())).jpeg({ quality: 100 }).toBuffer()

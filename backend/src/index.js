@@ -61,6 +61,20 @@ function initializeExpress (database) {
     })
   })
 
+  app.get('/jpeg/:letterId', (req, res) => {
+    letterCollection.findOne({ _id: new ObjectId(req.params.letterId) }).then(async doc => {
+      if (doc) {
+        const jpeg = await LetterRenderer.render(doc)
+        res.setHeader('Content-Type', 'image/jpeg')
+        res.send(jpeg)
+      } else {
+        res.sendStatus(404)
+      }
+    }).catch(err => {
+      res.sendStatus(500)
+    })
+  })
+
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
   })
