@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import LetterList from "./LetterList.jsx"
 
+import {
+  Container
+} from "@material-ui/core"
+
 export default function Admin () {
   const [letters, setLetters] = useState([]);
 
@@ -16,6 +20,8 @@ export default function Admin () {
   }, [])
 
   return (
-    <LetterList letters={letters} />
+    <Container>
+      <LetterList letters={letters} />
+    </Container>
   )
 }
