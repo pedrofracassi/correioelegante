@@ -24,8 +24,17 @@ function App() {
     <ThemeProvider>
         <Router>
           <Switch>
+            <Route path="/admin/approved">
+              <Admin filter="approved" />
+            </Route>
+            <Route path="/admin/denied">
+              <Admin filter="denied" />
+            </Route>
+            <Route path="/admin/delivered">
+              <Admin filter="delivered" />
+            </Route>
             <Route path="/admin">
-              <Admin />
+              <Admin filter="waiting_for_approval" />
             </Route>
             <Route path="/">
               <Home openSimpleSnackBar={openSimpleSnackBar} />
