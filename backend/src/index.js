@@ -33,12 +33,14 @@ function initializeExpress (database) {
     if (req.method === 'POST' && req.path === '/letters') return next()
     if (!req.header('Authorization')) return res.sendStatus(401)
     userCollection.findOne({ token: req.header('Authorization').replace('Bearer ', '') }).then(doc => {
+      console.log(doc)
       if (doc) {
         req.user = doc
         return next()
       }
       return res.sendStatus(401)
     }).catch(err => {
+      console.error(err)
       return res.sendStatus(401)
     })
   })
