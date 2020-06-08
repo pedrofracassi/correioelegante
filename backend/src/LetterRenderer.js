@@ -173,7 +173,10 @@ module.exports = class LetterRenderer {
     try {
       const jpeg = await convert(canvas.svg(), {
         height: 1080,
-        width: 1080
+        width: 1080,
+        puppeteer: {
+          args: ['--no-sandbox']
+        }
       })
       return jpeg
     } catch (e) {
