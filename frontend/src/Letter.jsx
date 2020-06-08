@@ -108,11 +108,21 @@ export default function Letter ({ letter }) {
               <></>
             )
           }
+          {
+            letter.error ? (
+              <Typography variant="body2" gutterBottom>
+                <strong>Erro:</strong> {letter.error}
+              </Typography>
+            ) : (
+              <></>
+            )
+          }
           <Chip size="small" color={letter.deliveryMethod === 'feed' ? 'primary' : 'secondary'} label={letter.deliveryMethod === 'feed' ? 'Feed' : 'Direct'} />
         </CardContent>
         <CardActions>
           { ['waiting_for_approval', 'denied'].includes(letter.status) ? <Button disabled={loading} size="small" disableElevation color="primary" onClick={() => updateStatus('approved')}>Aprovar</Button> : <></> }
           { ['waiting_for_approval', 'approved'].includes(letter.status) ? <Button disabled={loading} size="small" disableElevation color="secondary" onClick={() => updateStatus('denied')}>Reprovar</Button> : <></> }
+          { letter.instagramPostCode ? <Button disabled={loading} size="small" disableElevation component="a" href={`https://instagram.com/p/${letter.instagramPostCode}/`}>Ver no Instagram</Button> : <></> }
           <Button size="small" disabled={loading} component="a" href={`${process.env.REACT_APP_API_PATH}/jpeg/${letter._id}`}>Preview</Button>
         </CardActions>
         <LinearProgress hidden={!loading}/>

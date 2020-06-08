@@ -11,7 +11,7 @@ const pageNames = {
   'approved': 'Aguardando envio',
   'denied': 'Reprovadas',
   'delivered': 'Entregues',
-  'errored': 'Falha no envio'
+  'failed': 'Falha no envio'
 }
 
 export default function LetterList ({ status }) {

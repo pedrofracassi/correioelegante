@@ -37,6 +37,7 @@ export default function Admin ({ filter }) {
                 <Tab label="Aguardando envio"  component="a" href="../admin/approved"/>
                 <Tab label="Reprovadas"  component="a" href="../admin/denied"/>
                 <Tab label="Entregues"  component="a" href="../admin/delivered"/>
+                <Tab label="Falha no envio"  component="a" href="../admin/failed"/>
                 <Tab label="Sair" onClick={logout} />
               </Tabs>
             </AppBar>

@@ -33,6 +33,9 @@ function App() {
             <Route path="/admin/delivered">
               <Admin filter="delivered" />
             </Route>
+            <Route path="/admin/failed">
+              <Admin filter="failed" />
+            </Route>
             <Route path="/admin">
               <Admin filter="waiting_for_approval" />
             </Route>
