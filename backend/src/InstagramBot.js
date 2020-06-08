@@ -1,8 +1,13 @@
 const { IgApiClient } = require('instagram-private-api')
 const { ObjectId } = require('mongodb')
 
+const { setRandomInterval } = require('set-random-interval')
+
 const LetterRenderer = require('./LetterRenderer')
 const TextUtils = require('./TextUtils')
+
+const MIN_INTERVAL = 15
+const MAX_INTERVAL = 20
 
 module.exports = class InstagramBot {
   constructor (database) {
@@ -58,9 +63,9 @@ module.exports = class InstagramBot {
     console.log(`Logged in.`)
 
     this.deliverNextLetter()
-    setInterval(() => {
+    setRandomInterval(() => {
       this.deliverNextLetter()
-    }, 15 * 60 * 1000)
+    }, MIN_INTERVAL * 60 * 1000, MAX_INTERVAL * 60 * 1000)
   }
 
   async deliverNextLetter () {

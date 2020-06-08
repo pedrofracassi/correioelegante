@@ -30,6 +30,7 @@
     "nanoid": "^3.1.9",
     "node-fetch": "^2.6.0",
     "puppeteer": "^3.3.0",
+    "set-random-interval": "^1.1.0",
     "sharp": "^0.25.3",
     "svgdom": "^0.1.8",
     "text-to-svg": "^3.1.5",
