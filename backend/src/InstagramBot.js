@@ -6,8 +6,8 @@ const setRandomInterval = require('set-random-interval')
 const LetterRenderer = require('./LetterRenderer')
 const TextUtils = require('./TextUtils')
 
-const MIN_INTERVAL = 15
-const MAX_INTERVAL = 20
+const MIN_INTERVAL = process.env.MIN_LETTER_INTERVAL ? parseInt(process.env.MIN_LETTER_INTERVAL) : 15
+const MAX_INTERVAL = process.env.MAX_LETTER_INTERVAL ? parseInt(process.env.MAX_LETTER_INTERVAL) : 20
 
 function randomInterval(min, max) {
   return Math.random() * (max - min + 1) + min;
