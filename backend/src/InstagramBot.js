@@ -74,8 +74,8 @@ module.exports = class InstagramBot {
 
     console.log(`Logged in.`)
 
-    console.log(`Sending directs with a ${INTERVALS['direct'].MAX_INTERVAL}-${INTERVALS['direct'].MAX_INTERVAL}min interval`)
-    console.log(`Posting to feed with a ${INTERVALS['feed'].MAX_INTERVAL}-${INTERVALS['feed'].MAX_INTERVAL}min interval`)
+    console.log(`Sending directs with a ${INTERVALS['direct'].MIN_INTERVAL}-${INTERVALS['direct'].MAX_INTERVAL}min interval`)
+    console.log(`Posting to feed with a ${INTERVALS['feed'].MIN_INTERVAL}-${INTERVALS['feed'].MAX_INTERVAL}min interval`)
 
     this.deliverNextLetter('direct')
     this.deliverNextLetter('feed')
