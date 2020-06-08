@@ -75,7 +75,6 @@ module.exports = class TextUtils {
 
   static getParagraphLines (config) {
     const { text, fontStyle, fontSize, maxWidth, maxHeight, widthMargin = 0 } = config
-    console.log(fontSize)
     const font = styles[fontStyle]
 
     const words = insertBetween('\n', text.split('\n').map(word => word.split(' '))).flat()
@@ -90,7 +89,6 @@ module.exports = class TextUtils {
         currentLine++
         lines[currentLine] = [ '' ]
       } else if (this.getTextWidth(lines[currentLine].concat(w).join(' '), fontStyle, fontSize) < maxWidth - 2*widthMargin) {
-        console.log(this.getTextWidth(lines[currentLine].concat(w).join(' '), fontStyle, fontSize))
         lines[currentLine].push(w)
       } else {
         currentLine++

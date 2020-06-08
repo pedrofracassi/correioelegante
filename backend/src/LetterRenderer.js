@@ -119,7 +119,6 @@ module.exports = class LetterRenderer {
               .fill(CONTENT_FONT_COLOR)
               .x(currentX)
           } else if (typeof entity === 'object') {
-            console.log(currentX)
             const emojiContainer = lineContainer.nested()
             emojiContainer.image(entity.url)
               .size(fontSize, fontSize)
@@ -168,7 +167,7 @@ module.exports = class LetterRenderer {
         .x(footerContainer.width() - senderNameText.width() - senderClassroomText.width() - 10)
     }
 
-    console.log('Rastering')
+    console.log('Rasterizing')
 
     try {
       const jpeg = await convert(canvas.svg(), {
