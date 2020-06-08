@@ -117,22 +117,26 @@ module.exports = class InstagramBot {
 
   async deliverViaDirect(letter, jpeg) {
     console.log('Sending photo via direct')
-    const recipientId = await this.instagram.user.getIdByUsername(letter.recipient.instagram)
-    const thread = this.instagram.entity.directThread([recipientId.toString()])
-    thread.broadcastPhoto({
-      file: jpeg
-    }).then(res => {
-      if (res.item_id) {
-        console.log(`Direct sent successfully!`)
-        this.updateLetterStatus(letter._id, 'delivered', { instagramThreadId: res.thread_id, instagramItemId: res.item_id })
-        thread.broadcastText(`De ${TextUtils.getPersonDisplayName(letter.sender)} para ${TextUtils.getPersonDisplayName(letter.recipient)}`)
-      } else {
-        console.log('Instagram did not return an item_id. Failed.')
-        this.updateLetterStatus(letter._id, 'failed', { error: 'O instagram não retornou o ID da mensagem' })
-      }
+    this.instagram.user.getIdByUsername(letter.recipient.instagram).then(recipientId => {
+      const thread = this.instagram.entity.directThread([recipientId.toString()])
+      thread.broadcastPhoto({
+        file: jpeg
+      }).then(res => {
+        if (res.item_id) {
+          console.log(`Direct sent successfully!`)
+          this.updateLetterStatus(letter._id, 'delivered', { instagramThreadId: res.thread_id, instagramItemId: res.item_id })
+          thread.broadcastText(`De ${TextUtils.getPersonDisplayName(letter.sender)} para ${TextUtils.getPersonDisplayName(letter.recipient)}`)
+        } else {
+          console.log('Instagram did not return an item_id. Failed.')
+          this.updateLetterStatus(letter._id, 'failed', { error: 'O instagram não retornou o ID da mensagem' })
+        }
+      }).catch(err => {
+        console.error('Error while sending direct. Failed', err)
+        this.updateLetterStatus(letter._id, 'failed', { error: 'Um erro ocorreu ao enviar a foto via direct' })
+      })
     }).catch(err => {
-      console.error('Error while sending direct. Failed', err)
-      this.updateLetterStatus(letter._id, 'failed', { error: 'Um erro ocorreu ao enviar a foto via direct' })
+      console.error('Error while finding user', err)
+      this.updateLetterStatus(letter._id, 'failed', { error: 'Usuário não encontrado' })
     })
   }
 
