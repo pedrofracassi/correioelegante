@@ -6,8 +6,16 @@ const setRandomInterval = require('set-random-interval')
 const LetterRenderer = require('./LetterRenderer')
 const TextUtils = require('./TextUtils')
 
-const MIN_INTERVAL = process.env.MIN_LETTER_INTERVAL ? parseInt(process.env.MIN_LETTER_INTERVAL) : 15
-const MAX_INTERVAL = process.env.MAX_LETTER_INTERVAL ? parseInt(process.env.MAX_LETTER_INTERVAL) : 20
+const INTERVALS = {
+  direct: {
+    MIN_INTERVAL: process.env.MIN_DIRECT_INTERVAL ? parseInt(process.env.MIN_DIRECT_INTERVAL) : 15,
+    MAX_INTERVAL: process.env.MAX_DIRECT_INTERVAL ? parseInt(process.env.MAX_DIRECT_INTERVAL) : 20
+  },
+  feed: {
+    MIN_INTERVAL: process.env.MIN_FEED_INTERVAL ? parseInt(process.env.MIN_FEED_INTERVAL) : 45,
+    MAX_INTERVAL: process.env.MAX_FEED_INTERVAL ? parseInt(process.env.MAX_FEED_INTERVAL) : 60
+  }
+}
 
 function randomInterval(min, max) {
   return Math.random() * (max - min + 1) + min;
@@ -66,15 +74,17 @@ module.exports = class InstagramBot {
 
     console.log(`Logged in.`)
 
-    console.log(`Sending letters with a ${MIN_INTERVAL}-${MAX_INTERVAL}min interval`)
+    console.log(`Sending directs with a ${INTERVALS['direct'].MAX_INTERVAL}-${INTERVALS['direct'].MAX_INTERVAL}min interval`)
+    console.log(`Posting to feed with a ${INTERVALS['feed'].MAX_INTERVAL}-${INTERVALS['feed'].MAX_INTERVAL}min interval`)
 
-    this.deliverNextLetter()
+    this.deliverNextLetter('direct')
+    this.deliverNextLetter('feed')
   }
 
-  async deliverNextLetter () {
-    console.log('Letter delivery started. Looking for first letter in line...')
-    this.letterCollection.find({ status: 'approved', deliveryMethod: 'direct' }).toArray().then(async docs => {
-      if (docs.length < 1) return console.log('No letters in the delivery queue')
+  async deliverNextLetter (method = 'direct') {
+    console.log(`Looking for first ${method} letter in line...`)
+    this.letterCollection.find({ status: 'approved', deliveryMethod: method }).toArray().then(async docs => {
+      if (docs.length < 1) return console.log(`No letters in the ${method} delivery queue`)
       const firstInLine = docs.sort((a, b) => a.timestamp - b.timestamp)[0]
       console.log(`Found letter ${firstInLine._id} (${firstInLine.deliveryMethod}). Attempting to render.`)
       const jpeg = await LetterRenderer.render(firstInLine)
@@ -89,10 +99,10 @@ module.exports = class InstagramBot {
       }
     })
 
-    const nextInterval = randomInterval(MIN_INTERVAL, MAX_INTERVAL)
-    console.log(`Next letter will be delivered in ~${nextInterval} minutes`)
+    const nextInterval = randomInterval(INTERVALS[method].MIN_INTERVAL, INTERVALS[method].MAX_INTERVAL)
+    console.log(`Next ${method} letter will be delivered in ~${Math.round(nextInterval)} minutes`)
     setTimeout(() => {
-      this.deliverNextLetter()
+      this.deliverNextLetter(method)
     }, nextInterval * 60 * 1000)
   }
 
