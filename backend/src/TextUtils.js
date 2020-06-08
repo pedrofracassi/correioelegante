@@ -56,7 +56,7 @@ module.exports = class TextUtils {
 
   static getPersonDisplayName(person) {
     if (person.anonymous) return 'Anônimo(a)'
-    return `${person.name}${person.classroom ? ` (${this.getClassroomDisplayName(person.classroom)})` : ''}`
+    return `${person.name}${person.classroom ? ` (${this.getClassroomDisplayName(person.classroom)})` : ''}${person.instagram ? ` (@${person.instagram})` : ''}`
   }
 
   static getShortenedName(name) {
