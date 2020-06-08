@@ -1,13 +1,17 @@
 const { IgApiClient } = require('instagram-private-api')
 const { ObjectId } = require('mongodb')
 
-const { setRandomInterval } = require('set-random-interval')
+const setRandomInterval = require('set-random-interval')
 
 const LetterRenderer = require('./LetterRenderer')
 const TextUtils = require('./TextUtils')
 
 const MIN_INTERVAL = 15
 const MAX_INTERVAL = 20
+
+function randomInterval(min, max) {
+  return Math.random() * (max - min + 1) + min;
+}
 
 module.exports = class InstagramBot {
   constructor (database) {
@@ -62,10 +66,9 @@ module.exports = class InstagramBot {
 
     console.log(`Logged in.`)
 
+    console.log(`Sending letters with a ${MIN_INTERVAL}-${MAX_INTERVAL}min interval`)
+
     this.deliverNextLetter()
-    setRandomInterval(() => {
-      this.deliverNextLetter()
-    }, MIN_INTERVAL * 60 * 1000, MAX_INTERVAL * 60 * 1000)
   }
 
   async deliverNextLetter () {
@@ -85,6 +88,12 @@ module.exports = class InstagramBot {
         this.updateLetterStatus(firstInLine._id, 'failed', { error: 'Método de entrega desconhecido' })
       }
     })
+
+    const nextInterval = randomInterval(MIN_INTERVAL, MAX_INTERVAL)
+    console.log(`Next letter will be delivered in ~${nextInterval} minutes`)
+    setTimeout(() => {
+      this.deliverNextLetter()
+    }, nextInterval * 60 * 1000)
   }
 
   deliverViaFeed(letter, jpeg) {
