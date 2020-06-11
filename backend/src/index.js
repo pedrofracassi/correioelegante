@@ -16,8 +16,6 @@ mongo.connect(err => {
   console.info('Connected to the database successfully.')
   const database = mongo.db('correioelegante')
 
-  
-
   ExpressServer.initialize(database)
   if (process.env.INSTAGRAM_USERNAME && process.env.INSTAGRAM_PASSWORD) {
     const bot = new InstagramBot(database).initialize()
