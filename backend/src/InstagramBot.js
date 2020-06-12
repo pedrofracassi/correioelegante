@@ -1,5 +1,6 @@
 const { IgApiClient } = require('instagram-private-api')
 const { ObjectId } = require('mongodb')
+const md5 = require('md5')
 
 const setRandomInterval = require('set-random-interval')
 
@@ -31,15 +32,16 @@ module.exports = class InstagramBot {
 
   async initialize () {
     const salt = process.env.SALT || ''
-    this.instagram.state.generateDevice(process.env.INSTAGRAM_USERNAME + salt)
+    const sessionHash = md5(process.env.INSTAGRAM_USERNAME + salt)
+    this.instagram.state.generateDevice(sessionHash)
 
     this.instagram.request.end$.subscribe(() => {
       console.info('Caching session data')
       this.instagram.state.serialize().then(serialized => {
         delete serialized.constants
-        this.instagramSessionCollection.findOneAndUpdate({ username: process.env.INSTAGRAM_USERNAME }, {
+        this.instagramSessionCollection.findOneAndUpdate({ sessionHash }, {
           $set: {
-            username: process.env.INSTAGRAM_USERNAME,
+            sessionHash,
             data: JSON.stringify(serialized)
           }
         }, {
@@ -53,7 +55,7 @@ module.exports = class InstagramBot {
     })
 
     console.info('Looking for session data cache')
-    const session = await this.instagramSessionCollection.findOne({ username: process.env.INSTAGRAM_USERNAME })
+    const session = await this.instagramSessionCollection.findOne({ sessionHash: sessionHash }) // { sessionHash } won't work here for some reason.
 
     if (session) {
       console.info('Using previously cached session data')
