@@ -30,7 +30,8 @@ module.exports = class InstagramBot {
   }
 
   async initialize () {
-    this.instagram.state.generateDevice(process.env.INSTAGRAM_USERNAME + "salt")
+    const salt = process.env.SALT || ''
+    this.instagram.state.generateDevice(process.env.INSTAGRAM_USERNAME + salt)
 
     this.instagram.request.end$.subscribe(() => {
       console.info('Caching session data')
