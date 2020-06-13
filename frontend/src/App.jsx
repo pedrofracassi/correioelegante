@@ -7,6 +7,7 @@ import {
 
 import Home from './Home.jsx'
 import Admin from './Admin.jsx'
+import ThankYou from './ThankYou.jsx'
 import { ThemeProvider } from '@material-ui/core'
 import Snackbar from "@material-ui/core/Snackbar"
 import IconButton from '@material-ui/core/IconButton'
@@ -40,7 +41,7 @@ function App() {
               <Admin filter="waiting_for_approval" />
             </Route>
             <Route path="/">
-              <Home openSimpleSnackBar={openSimpleSnackBar} />
+              <ThankYou></ThankYou>
             </Route>
           </Switch>
         </Router>
