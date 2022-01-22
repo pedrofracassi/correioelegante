@@ -28,7 +28,7 @@
     "instagram-private-api": "^1.40.1",
     "md5": "^2.2.1",
     "mongodb": "^3.5.8",
-    "nanoid": "^3.1.9",
+    "nanoid": "^3.1.31",
     "node-fetch": "^2.6.0",
     "puppeteer": "^3.3.0",
     "set-random-interval": "^1.1.0",
